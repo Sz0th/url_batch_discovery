@@ -71,6 +71,7 @@ python3 url_batch_discovery.py -l url.txt -m "JBoss"
 
 * 本工具使用 Python3 开发，因此需要 Python3 环境支持
 * 本工具核心功能来自 httpx
+* 本工具的运行速度取决于你设置的线程大小以及端口数量的多少
 * 如果使用过程中碰到 bug，欢迎提 issue，如果帮助到你，欢迎赏个 star
 
 ![](https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png)
