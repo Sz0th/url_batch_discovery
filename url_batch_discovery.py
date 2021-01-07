@@ -17,6 +17,12 @@ def print_wait():
 
 
 def main(file, match_string, output_path, ports, threads):
+    print('''\033[1;33m[+] 扫描线程：%s
+[+] 导出目录：%s
+[+] 待扫描文件：%s
+[+] 待扫描端口：%s
+[+] 待匹配字符串：%s
+          \033[0m'''%(threads,output_path,file,ports,match_string))
     if file == './tmp/tmp.txt':
         with open(file) as f:
             file_url = f.readlines()[0]
@@ -31,8 +37,8 @@ def main(file, match_string, output_path, ports, threads):
         file_title = output_path + file_url.split('/')[-1].split('.')[-2] + '_tmp.txt'
         file_path = output_path + file_url.split('/')[-1].split('.')[-2] + '.xlsx'
     else:
-        file_title = output_path + file_url.replace('.','_') + '_tmp.txt'
-        file_path = output_path + file_url.replace('.','_') + '.xlsx'
+        file_title = output_path + file_url.replace('.', '_') + '_tmp.txt'
+        file_path = output_path + file_url.replace('.', '_') + '.xlsx'
     pool = []
     if match_string == 'null':
         os.system(
@@ -76,7 +82,7 @@ if __name__ == '__main__':
 |  |  |    -|  |__   | __ -| .'|  _|  _|   |  |  |  | |_ -|  _| . | | | -_|  _| | |
 |_____|__|__|_____|  |_____|__,|_| |___|_|_|  |____/|_|___|___|___|\_/|___|_| |_  |
                                                                               |___|
- Version: 0.1               date: 2020.12.25
+ Version: 0.2               date: 2021.1.7
  公众号：TeamsSix           博客：teamssix.com
  Author: TeamsSix           GitHub：https://github.com/teamssix/url_batch_discovery
  注：本工具核心功能来自于优秀的 httpx 工具，使用本工具需要先安装 httpx，httpx 项目地址：https://github.com/projectdiscovery/httpx
@@ -119,7 +125,7 @@ if __name__ == '__main__':
     if args.threads:
         threads = args.threads
     else:
-        threads = '50'
+        threads = '100'
     if args.url:
         url = args.url
         if not os.path.exists('./tmp'):
