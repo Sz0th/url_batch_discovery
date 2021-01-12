@@ -92,7 +92,7 @@ if __name__ == '__main__':
     parser.add_argument('-m', dest='match', help='指定要匹配的关键字，返回结果中将只包含存在该关键字的内容')
     parser.add_argument('-o', dest='output', help='导出的文件路径，默认保存在./output/文件夹内，导出文件格式为xlsx，格式：/path1/path2/')
     parser.add_argument('-p', dest='port', help='指定要检测的端口，默认80和443端口，格式：80,443,8000-8010')
-    parser.add_argument('-t', dest='threads', help='指定线程大小，默认50个线程')
+    parser.add_argument('-t', dest='threads', help='指定线程大小，默认100个线程')
     parser.add_argument('-u', dest='url', help='指定单个URL')
     args = parser.parse_args()
 
