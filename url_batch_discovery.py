@@ -15,6 +15,21 @@ def print_wait():
         idx += 1
         time.sleep(0.1)
 
+def clear_url(file):
+    clear_url_list = []
+    with open(file) as f:
+        f = f.readlines()
+        for i in f:
+            i = i.strip()
+            if '//' in i:
+                i = i.split('/')[2]
+            elif '/' in i:
+                i = i.split('/')[0]
+            clear_url_list.append(i)
+    with open('./tmp/clear_url.txt','w') as w:
+        for i in clear_url_list:
+            w.write(i+'\n')
+
 
 def main(file, match_string, output_path, ports, threads):
     print('''\033[1;33m[+] 扫描线程：%s
@@ -44,15 +59,16 @@ def main(file, match_string, output_path, ports, threads):
         file_title = output_path + file_url.replace('.', '_') + '_tmp.txt'
         file_path = output_path + file_url.replace('.', '_') + '.xlsx'
     pool = []
+    clear_url(file)
     if match_string == 'null':
         os.system(
-            'httpx -l %s -threads %s -title -title -json -silent -ports %s -follow-redirects > %s' % (
-                file, threads, ports, file_title))
+            'httpx -l ./tmp/clear_url.txt -threads %s -title -title -json -silent -ports %s -follow-redirects > %s' % (
+                threads, ports, file_title))
     else:
         os.system(
-            'httpx -l %s -threads %s -title -title -json -silent -ports %s -match-string "%s" -follow-redirects > %s' % (
-                file, threads, ports, match_string, file_title))
-
+            'httpx -l ./tmp/clear_url.txt -threads %s -title -title -json -silent -ports %s -match-string "%s" -follow-redirects > %s' % (
+                threads, ports, match_string, file_title))
+    os.remove('./tmp/clear_url.txt')
     with open(file_title) as f:
         f = f.readlines()
         for i in f:
@@ -86,7 +102,7 @@ if __name__ == '__main__':
 |  |  |    -|  |__   | __ -| .'|  _|  _|   |  |  |  | |_ -|  _| . | | | -_|  _| | |
 |_____|__|__|_____|  |_____|__,|_| |___|_|_|  |____/|_|___|___|___|\_/|___|_| |_  |
                                                                               |___|
- Version: 0.2.1             date: 2021.1.12
+ Version: 0.3               date: 2021.1.12
  公众号：TeamsSix           博客：teamssix.com
  Author: TeamsSix           GitHub：https://github.com/teamssix/url_batch_discovery
  注：本工具核心功能来自于优秀的 httpx 工具，使用本工具需要先安装 httpx，httpx 项目地址：https://github.com/projectdiscovery/httpx
@@ -130,15 +146,14 @@ if __name__ == '__main__':
         threads = args.threads
     else:
         threads = '100'
+    if not os.path.exists('./tmp'):
+        os.makedirs('./tmp')
     if args.url:
         url = args.url
-        if not os.path.exists('./tmp'):
-            os.makedirs('./tmp')
         with open('./tmp/tmp.txt', 'w') as w:
             w.write(url)
         main('./tmp/tmp.txt', match_string, output_path, ports, threads)
         os.remove('./tmp/tmp.txt')
-        os.removedirs('./tmp/')
     elif args.list:
         file = args.list
         if not os.path.isfile(file):
@@ -152,3 +167,4 @@ if __name__ == '__main__':
                     sys.exit()
                 else:
                     main(file, match_string, output_path, ports, threads)
+    os.removedirs('./tmp/')
