@@ -36,6 +36,10 @@ def main(file, match_string, output_path, ports, threads):
     if len(file_url.split('/')) > 2 and '//' not in file_url:
         file_title = output_path + file_url.split('/')[-1].split('.')[-2] + '_tmp.txt'
         file_path = output_path + file_url.split('/')[-1].split('.')[-2] + '.xlsx'
+    elif len(file_url.split('/')) > 2 and '//' in file_url:
+        file_url = file_url.strip('/')
+        file_title = output_path + file_url.split('/')[-1].replace('.','_') + '_tmp.txt'
+        file_path = output_path + file_url.split('/')[-1].replace('.','_') + '.xlsx'
     else:
         file_title = output_path + file_url.replace('.', '_') + '_tmp.txt'
         file_path = output_path + file_url.replace('.', '_') + '.xlsx'
@@ -82,7 +86,7 @@ if __name__ == '__main__':
 |  |  |    -|  |__   | __ -| .'|  _|  _|   |  |  |  | |_ -|  _| . | | | -_|  _| | |
 |_____|__|__|_____|  |_____|__,|_| |___|_|_|  |____/|_|___|___|___|\_/|___|_| |_  |
                                                                               |___|
- Version: 0.2               date: 2021.1.7
+ Version: 0.2.1             date: 2021.1.12
  公众号：TeamsSix           博客：teamssix.com
  Author: TeamsSix           GitHub：https://github.com/teamssix/url_batch_discovery
  注：本工具核心功能来自于优秀的 httpx 工具，使用本工具需要先安装 httpx，httpx 项目地址：https://github.com/projectdiscovery/httpx
